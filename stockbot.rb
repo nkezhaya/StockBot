@@ -21,7 +21,7 @@ class StockBot
   end
 
   def say(msg)
-    puts msg
+    puts msg unless msg =~ /^(PING|PONG)(.*)/ 
     @socket.puts msg
   end
 
