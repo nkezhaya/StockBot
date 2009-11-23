@@ -2,9 +2,9 @@ def gh(*args)
   html = RestClient.get('http://confessions.grouphug.us/random')
   doc = Hpricot(html)
 
-  doc.search("//h2[@class='title']")[4].inner_html =~ /(\d+)/
+  doc.search("//h2[@class='title']")[5].inner_html =~ /(\d+)/
   number = $1
-  confession = doc.search("//div[@class='content']")[4].inner_html.strip
+  confession = doc.search("//div[@class='content']")[5].inner_html.strip
   confession = Sanitize.clean(confession)
 
   if confession.length > 400

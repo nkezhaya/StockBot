@@ -1,6 +1,7 @@
 def quote(args)
   time = Time.now.strftime('%m/%d/%Y')
   rquote = Rquote.new
+  args.uniq!
 
   for symbol in args
     stock = rquote.find(symbol)
