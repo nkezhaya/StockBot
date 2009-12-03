@@ -5,6 +5,6 @@ def quote(args)
 
   for symbol in args
     stock = rquote.find(symbol)
-    say_to_chan("#{symbol.upcase} -> #{time} | Last #{stock.first[:price]} (#{stock.first[:change]}) | Vol. #{stock.first[:volume]}")
+    say_to_chan("#{symbol.upcase} -> #{time} | Last #{stock.first[:price]} (#{stock.first[:change]}) | Vol. #{stock.first[:volume]}") unless stock.first[:price] == "0.00"
   end
 end

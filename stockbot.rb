@@ -17,7 +17,7 @@ class StockBot
     say "NICK StockBot"
     say "USER stockbot 0 * StockBot"
     say "JOIN ##{@channel}"
-    say_to_chan "#{1.chr}ACTION is here to help#{1.chr}"
+    say_to_chan "WASSUP WID IT"
   end
 
   def say(msg)
