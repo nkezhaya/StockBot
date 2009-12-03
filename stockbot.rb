@@ -45,7 +45,6 @@ class StockBot
 
         begin
           if content.match(/^\!(\w+)(\ )?(.*)/)
-            require 'ruby-debug/debugger'
             call = $1
             call += " \"#{$3.strip}\".split(' ').uniq" unless $3 == nil
             eval(call) if @modules.include? $1
