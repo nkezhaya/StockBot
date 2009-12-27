@@ -23,11 +23,11 @@ class StockBot
   def say(msg)
     puts msg unless msg =~ /^(PING|PONG)(.*)/ 
     @socket.puts msg
+    sleep 2 # flood control
   end
 
   def say_to_chan(msg)
     say "PRIVMSG ##{@channel} :#{msg.gsub("\x93", '"').gsub("\x94", '"')}" rescue nil
-    sleep 2 # flood control
   end
 
   def run

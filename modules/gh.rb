@@ -6,6 +6,7 @@ def gh(*args)
   number = $1
   confession = doc.search("//div[@class='content']")[5].inner_html.strip
   confession = Sanitize.clean(confession)
+  confession.remove_nonascii!
 
   if confession.length > 400
     confession_chunks = []
