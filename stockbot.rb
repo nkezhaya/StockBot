@@ -21,7 +21,7 @@ class StockBot
   end
 
   def say(msg)
-    puts msg unless msg =~ /^(P.NG)(.*)/ 
+    puts msg unless msg =~ /^(P.NG)/
     @socket.puts msg
     sleep 2 # flood control
   end
@@ -33,7 +33,7 @@ class StockBot
   def run
     until @socket.eof? do
       msg = @socket.gets
-      puts msg
+      puts msg unless msg =~ /^(P.NG)/
 
       if msg.match(/^PING :(.*)$/)
         say "PONG #{$~[1]}"
