@@ -21,7 +21,7 @@ class StockBot
   end
 
   def say(msg)
-    puts msg unless msg =~ /^(PING|PONG)(.*)/ 
+    puts msg unless msg =~ /^(P.NG)(.*)/ 
     @socket.puts msg
     sleep 2 # flood control
   end
