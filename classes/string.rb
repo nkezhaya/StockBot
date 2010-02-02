@@ -5,6 +5,7 @@ class String
     self.gsub!('&#8221;', '"')
     self.gsub!('&#8230;', '...')
     self.gsub!('&nbsp;', ' ')
+    self.gsub!('&amp;', '&')
     self.gsub!('  ', ' ')
 
     n = self.split ''
