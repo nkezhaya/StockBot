@@ -1,7 +1,7 @@
 
 def w(*args)
   api = 'http://api.wunderground.com/auto/wui/geo/WXCurrentObXML/index.xml?query='
-  zip = args[0].first
+  zip = args.flatten.join
 
   xml = RestClient.get(api + zip)
   doc = Hpricot::XML(xml)
