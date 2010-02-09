@@ -1,4 +1,3 @@
-
 def w(*args)
   api = 'http://api.wunderground.com/auto/wui/geo/WXCurrentObXML/index.xml?query='
   zip = args.flatten.join
@@ -11,5 +10,5 @@ def w(*args)
     res << doc.at(var).inner_html
   end
 
-  say_to_chan res.join(' - ')
+  say_to_chan res.join(' - ') unless res.first == ', '
 end
