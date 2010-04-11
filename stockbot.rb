@@ -1,13 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
-require 'socket'
-require 'rest_client'
-require 'hpricot'
-require 'sanitize'
-require 'cgi'
-require 'net/http'
-require 'pony'
+require 'config'
 
 class StockBot
   def initialize(server, port, channel)
@@ -46,9 +39,10 @@ class StockBot
 
         begin
           if content.match(/^\!(\w+)(\ )?(.*)/)
-            call = $1
+            call = $1; method = $1
             call += " \"#{$3.strip}\".split(' ').uniq" unless $3 == nil
-            eval(call) if @modules.include? $1
+            call += ".push('#{msg.match(/\:([^\!]+)\!/)[1].gsub('\'', '\\\'')}')"
+            eval(call) if @modules.include? method
           end
         rescue
           say_to_chan "Invalid request."
