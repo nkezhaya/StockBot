@@ -7,6 +7,7 @@ require 'hpricot'
 require 'sanitize'
 require 'cgi'
 require 'net/http'
+require 'pony'
 
 class StockBot
   def initialize(server, port, channel)
