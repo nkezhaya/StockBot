@@ -4,7 +4,7 @@ def sms(*args)
   to    = args.shift.downcase
   body  = args.join ' '
 
-  if x.to_i == 0
+  if to.to_i == 0
     if $users[to] and $users[to][:sms]
       to  = $users[to][:sms]
     else
