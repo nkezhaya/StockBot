@@ -12,6 +12,6 @@ def sms(*args)
     end
   end
 
-  Pony.mail(:to => "#{to.to_i}@txt.att.net", :from => from, :body => body)
+  Pony.mail(:to => to, :from => from, :body => body)
   say_to_chan 'Message sent.'
 end
