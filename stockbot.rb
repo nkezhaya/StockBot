@@ -40,7 +40,7 @@ class StockBot
         begin
           if content.match(/^\!(\w+)(\ )?(.*)/)
             call = $1; method = $1
-            call += " \"#{$3.strip}\".split(' ').uniq" unless $3 == nil
+            call += " \"#{$3.strip}\".split(' ')" unless $3 == nil
             call += ".push('#{msg.match(/\:([^\!]+)\!/)[1].gsub('\'', '\\\'')}')"
             eval(call) if @modules.include? method
           end
