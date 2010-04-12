@@ -65,5 +65,4 @@ class StockBot
 end
 
 bot = StockBot.new("irc.freenode.net", 6667, 'stock')
-trap("INT"){ bot.quit }
 bot.run
