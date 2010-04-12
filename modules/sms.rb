@@ -1,10 +1,15 @@
 def sms(*args)
-  from  = '#stock@irc.freenode.net'
-  to    = args[0].flatten[0].downcase
-  body  = args[0].flatten[1]
+  args  = args[0].flatten
+  from  = "#{args.pop}#stock@irc.freenode.net"
+  to    = args.shift.downcase
+  body  = args.join ' '
 
-  if $users[to] and $users[to][:sms]
-    to  = $users[to][:sms]
+  if x.to_i == 0
+    if $users[to] and $users[to][:sms]
+      to  = $users[to][:sms]
+    else
+      say_to_chan 'Invalid recipient.'
+    end
   end
 
   Pony.mail(:to => "#{to.to_i}@txt.att.net", :from => from, :body => body)
