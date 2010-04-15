@@ -64,5 +64,5 @@ class StockBot
   end
 end
 
-bot = StockBot.new("irc.freenode.net", 6667, 'stock')
+bot = StockBot.new("irc.freenode.net", 6667, 'stocktest')
 bot.run
