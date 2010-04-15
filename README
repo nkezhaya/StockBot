@@ -1,4 +1,7 @@
-== Starting StockBot
+= StockBot
+IRC bot built for irc.freenode.net #stock
+
+== Usage
 
   ruby stockbot.rb
 
