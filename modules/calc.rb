@@ -1,7 +1,7 @@
 def calc(*args)
   arg = args[0].flatten
   snd = arg.pop
-  url = "http://www.google.com/search?q=#{arg.join}"
+  url = "http://www.google.com/search?q=#{CGI.escape(arg.join)}"
   dat = RestClient.get(url)
   doc = Hpricot(dat.to_s)
   r1  = doc.search("//h2[@class='r']")

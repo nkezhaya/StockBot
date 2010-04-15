@@ -2,6 +2,9 @@
 
 require 'config'
 
+OPERATORS = /\+\-\*\/\!\^\(\)/
+STANDARDS = /\w\s\@/
+
 class StockBot
   def initialize(server, port, channel)
     include_classes_and_modules
@@ -38,13 +41,11 @@ class StockBot
         content = $~[1]
 
         begin
-          OPERATORS = "\+\-\*\/\!\^\(\)"
-          STANDARDS = "\w\s\@"
-          if content.match(/^\!(\w+)(\ )?([#{STANDARDS}#{OPERATORS}]+)/)
-            call = $1; method = $1
+          if content.match(/^\!(\w+)(\ )?([#{OPERATORS}#{STANDARDS}]+)/)
+            call = $1; mtd = $1
             call += " \"#{$3.strip}\".split(' ')" unless $3 == nil
             call += ".push('#{msg.match(/\:([^\!]+)\!/)[1].gsub('\'', '\\\'')}')"
-            eval(call) if @modules.include? method
+            eval(call) if @modules.include? mtd
           end
         rescue
           say_to_chan "Invalid request."
