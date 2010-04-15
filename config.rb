@@ -26,5 +26,10 @@ $users = {
   'makmanalp'   => {
     :w          => '01609',
     :sms        => '5087627257@tmomail.net'
+  },
+
+  'god_'        => {
+    :w          => 'H4G2M4',
+    :sms        => '5145139979@pcs.rogers.ca'
   }
 }
