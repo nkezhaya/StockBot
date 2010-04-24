@@ -31,5 +31,14 @@ $users = {
   'god_'        => {
     :w          => 'H4G2M4',
     :sms        => '5145139979@pcs.rogers.ca'
+  },
+
+  'impl'        => {
+    :w          => '64111',
+    :sms        => '8168670001@txt.att.net'
+  },
+
+  'stitch'      => {
+    :w          => '64111'
   }
 }
