@@ -3,7 +3,7 @@
 require 'config'
 
 OPERATORS = /\+\-\*\/\!\^\(\)/
-STANDARDS = /\w\s\@/
+STANDARDS = /\d\.\w\s\@/
 
 class StockBot
   def initialize(server, port, channel)
