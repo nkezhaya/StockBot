@@ -1,5 +1,11 @@
 def gh(*args)
-  html = RestClient.get('http://confessions.grouphug.us/random')
+  begin
+    html = RestClient.get('http://confessions.grouphug.us/random')
+  rescue
+    say_to_chan 'GH is down. :('
+    return
+  end
+
   doc = Hpricot(html)
 
   doc.search("//h2[@class='title']")[5].inner_html =~ /(\d+)/
