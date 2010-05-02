@@ -2,9 +2,9 @@
 
 require 'config'
 
-URL       = 'https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?'
+URL       = /^((http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?(\/[\w\-\=\?\d\%]+)?)$/ix
 OPERATORS = /\+\-\*\/\!\^\(\)/
-STANDARDS = /\d\.\w\s\@/
+STANDARDS = /\d\.\w\s\@/i
 
 class StockBot
   def initialize(server, port, channel)
@@ -43,7 +43,8 @@ class StockBot
 
         if @modules.include? 'title'
           if content.match(/#{URL}/)
-            title $1 unless content.match(/^(\.|\!)title/)
+            url = $1
+            title url unless content.match(/^(\.|\!)title/)
           end
         end
 
