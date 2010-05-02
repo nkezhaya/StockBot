@@ -15,3 +15,5 @@ def sms(*args)
   Pony.mail(:to => to, :from => from, :body => body)
   say_to_chan 'Message sent.'
 end
+
+alias :txt :sms
