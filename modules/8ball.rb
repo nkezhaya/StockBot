@@ -1,4 +1,4 @@
-def ball(*args)
+Object.send(:define_method, '8ball'.to_sym) do |*args|
   possible_answers = [
     'As I see it, yes.',
     'It is certain.',
