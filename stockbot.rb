@@ -2,6 +2,7 @@
 
 require 'config'
 
+URL       = 'https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?'
 OPERATORS = /\+\-\*\/\!\^\(\)/
 STANDARDS = /\d\.\w\s\@/
 
@@ -39,6 +40,12 @@ class StockBot
 
       if msg.match(/PRIVMSG ##{@channel} :(.*)$/)
         content = $~[1]
+
+        if @modules.include? 'title'
+          if content.match(/#{URL}/)
+            title $1 unless content.match(/^(\.|\!)title/)
+          end
+        end
 
         begin
           if content.match(/^(\.|\!)(\w+)(\ )?([#{OPERATORS}#{STANDARDS}]+)/)
