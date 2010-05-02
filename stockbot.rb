@@ -41,9 +41,9 @@ class StockBot
         content = $~[1]
 
         begin
-          if content.match(/^\!(\w+)(\ )?([#{OPERATORS}#{STANDARDS}]+)/)
-            call = $1; mtd = $1
-            call += " \"#{$3.strip}\".split(' ')" unless $3 == nil
+          if content.match(/^(\.|\!)(\w+)(\ )?([#{OPERATORS}#{STANDARDS}]+)/)
+            call = $2; mtd = $2
+            call += " \"#{$4.strip}\".split(' ')" unless $4 == nil
             call += ".push('#{msg.match(/\:([^\!]+)\!/)[1].gsub('\'', '\\\'')}')"
             eval(call) if @modules.include? mtd
           end
