@@ -45,7 +45,7 @@ class StockBot
             call = $2; mtd = $2
             call += " \"#{$4.strip}\".split(' ')" unless $4 == nil
             call += ".push('#{msg.match(/\:([^\!]+)\!/)[1].gsub('\'', '\\\'')}')"
-            eval(call) if @modules.include? mtd
+            eval(call) if @modules.include?(mtd) or respond_to?(mtd, true)
           end
         rescue
           say_to_chan "Invalid request."
