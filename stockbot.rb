@@ -44,7 +44,9 @@ class StockBot
         if @modules.include? 'title'
           if content.match(/#{URL}/)
             url = $1
-            title url unless content.match(/^(\.|\!)title/)
+            unless content.match(/^(\.|\!)title/)
+              title url rescue nil
+            end
           end
         end
 
