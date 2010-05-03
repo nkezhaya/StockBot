@@ -3,7 +3,7 @@
 require 'config'
 
 URL       = /((http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?(\/[\w\-\=\?\d\%]+)?)/ix
-OPERATORS = /\+\-\*\/\!\^\(\)/
+OPERATORS = /\+\-\*\/\!\^\(\)\?\=\'\"\&/
 STANDARDS = /\d\.\w\s\@/i
 
 class StockBot
@@ -50,12 +50,16 @@ class StockBot
 
         begin
           if content.match(/^(\.|\!)(\w+)(\ )?([#{OPERATORS}#{STANDARDS}]+)/)
-            call = "send('#{$2}'.to_sym, "; mtd = $2
-            call += " \"#{$4.strip}\".split(' ')" unless $4 == nil
+            method = $2.to_s
+            args   = $4.to_s.strip.gsub(/'/, "\\\\'")
+
+            call = "send('#{method}'.to_sym, "
+            call += " \"#{args}\".split(' ')"
             call += ".push('#{msg.match(/\:([^\!]+)\!/)[1].gsub('\'', '\\\'')}'))"
-            eval(call) if @modules.include?(mtd) or respond_to?(mtd, true)
+            eval(call) if @modules.include?(method) or respond_to?(method, true)
           end
         rescue
+          puts $!
           say_to_chan "Invalid request."
         end
       end

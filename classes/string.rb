@@ -21,4 +21,10 @@ class String
 
     self.to_s
   end
+
+  def strip_html!(replacement = '')
+    self.gsub!(/<[^<]+\>/, '')
+
+    self.to_s
+  end
 end

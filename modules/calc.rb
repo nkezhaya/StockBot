@@ -5,7 +5,7 @@ def calc(*args)
   dat = RestClient.get(url)
   doc = Hpricot(dat.to_s)
   r1  = doc.search("//h2[@class='r']")
-  r2  = r1.search("b").inner_html.gsub("\240", '').gsub(/<[^<]+\>/, '')
+  r2  = r1.search("b").inner_html.gsub("\240", '').strip_html!
 
   unless r2.empty?
     say_to_chan "#{snd}: #{r2}"
