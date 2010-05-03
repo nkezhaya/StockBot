@@ -4,5 +4,5 @@ def title(*args)
 
   title = doc.search("title").inner_html.gsub(/(\n|\t)/, ' ').strip.gsub(/\s+/, ' ')
 
-  say_to_chan "URL Title: #{title}"
+  say_to_chan "URL Title: #{title}" unless title == ''
 end
