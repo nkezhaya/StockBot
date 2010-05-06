@@ -5,10 +5,12 @@ def sms(*args)
   body  = args.join ' '
 
   if to.to_i == 0
-    if $users[to] and $users[to][:sms]
-      to  = $users[to][:sms]
+    user = DB[:users].filter(:name => to).first
+    if user and user[:sms_email]
+      to  = user[:sms_email]
     else
       say_to_chan 'Invalid recipient.'
+      return
     end
   end
 
