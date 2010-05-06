@@ -1,7 +1,3 @@
-URL       = /((http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?(\/[\w\-\=\?\d\%]+)?)/ix
-OPERATORS = /\+\-\*\/\!\^\(\)\?\=\'\"\&/
-STANDARDS = /\d\.\w\s\@/i
-
 class StockBot
   def initialize(server, port, channel)
     @channel = channel
@@ -10,8 +6,7 @@ class StockBot
     say "USER stockbot 0 * StockBot"
     say "JOIN ##{@channel}"
 
-    @modules = []
-    Dir['modules/*'].each { |object| require object; @modules << object.to_s.gsub('.rb', '').gsub('modules/', '') }
+    Dir['modules/*'].each { |object| require object }
   end
 
   def say(msg)
@@ -37,8 +32,8 @@ class StockBot
       if msg.match(/PRIVMSG ##{@channel} :(.*)$/)
         content = $~[1]
 
-        if @modules.include? 'title'
-          if content.match(/#{URL}/)
+        if respond_to? 'title', true
+          if content.match(/((http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?(\/[\w\-\=\?\d\%]+)?)/ix)
             url = $1
             unless content.match(/^(\.|\!)title/)
               title url rescue nil
@@ -51,7 +46,7 @@ class StockBot
             method = $2.to_s
             args   = $4.to_s.strip.gsub(/'/, "\\\\'")
 
-            if @modules.include?(method) or respond_to?(method, true)
+            if respond_to?(method, true)
               send(method, args.split(' ').push(msg.match(/\:([^\!]+)\!/)[1]))
             end
           end
