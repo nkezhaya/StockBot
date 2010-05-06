@@ -1,21 +1,17 @@
-#!/usr/bin/env ruby
-
-require 'config'
-
 URL       = /((http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?(\/[\w\-\=\?\d\%]+)?)/ix
 OPERATORS = /\+\-\*\/\!\^\(\)\?\=\'\"\&/
 STANDARDS = /\d\.\w\s\@/i
 
 class StockBot
   def initialize(server, port, channel)
-    include_classes_and_modules
-
     @channel = channel
     @socket = TCPSocket.open(server, port)
     say "NICK StockBot"
     say "USER stockbot 0 * StockBot"
     say "JOIN ##{@channel}"
-    say_to_chan "WASSUP WID IT"
+
+    @modules = []
+    Dir['modules/*'].each { |object| require object; @modules << object.to_s.gsub('.rb', '').gsub('modules/', '') }
   end
 
   def say(msg)
@@ -51,14 +47,13 @@ class StockBot
         end
 
         begin
-          if content.match(/^(\.|\!)(\w+)(\ )?([#{OPERATORS}#{STANDARDS}]+)/)
+          if content.match(/^(\.|\!)(\w+)(\ )?(.*)/)
             method = $2.to_s
             args   = $4.to_s.strip.gsub(/'/, "\\\\'")
 
-            call = "send('#{method}'.to_sym, "
-            call += " \"#{args}\".split(' ')"
-            call += ".push('#{msg.match(/\:([^\!]+)\!/)[1].gsub('\'', '\\\'')}'))"
-            eval(call) if @modules.include?(method) or respond_to?(method, true)
+            if @modules.include?(method) or respond_to?(method, true)
+              send(method, args.split(' ').push(msg.match(/\:([^\!]+)\!/)[1]))
+            end
           end
         rescue
           puts $!
@@ -72,14 +67,4 @@ class StockBot
     say "PART ##{@channel} :lolwat"
     say 'QUIT'
   end
-
-  private
-  def include_classes_and_modules
-    @modules = []
-    Dir['classes/*'].each { |object| require object }
-    Dir['modules/*'].each { |object| require object; @modules << object.to_s.gsub('.rb', '').gsub('modules/', '') }
-  end
 end
-
-bot = StockBot.new("irc.freenode.net", 6667, 'stock')
-bot.run

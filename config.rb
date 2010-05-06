@@ -7,6 +7,8 @@ require 'cgi'
 require 'net/http'
 require 'pony'
 
+Dir['classes/*'].each { |object| require object }
+
 $users = {
   'zarathu'     => {
     :w          => '75209',
