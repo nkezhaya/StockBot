@@ -1,0 +1,3 @@
+def wiki(*args)
+  
+end
