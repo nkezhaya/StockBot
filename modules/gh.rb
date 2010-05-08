@@ -6,7 +6,7 @@ def gh(*args)
     return
   end
 
-  doc = Hpricot(html)
+  doc = Hpricot(html.to_s)
 
   doc.search("//h2[@class='title']")[5].inner_html =~ /(\d+)/
   number = $1
