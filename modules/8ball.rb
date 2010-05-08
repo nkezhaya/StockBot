@@ -25,7 +25,7 @@ Object.send(:define_method, '8ball'.to_sym) do |*args|
     'nawwwwwwwwwwwwww'
   ]
 
-  result = possible_answers.sort_by { rand }.first
+  result = possible_answers[Random.number(possible_answers.length) - 1]
   sender = args[0].pop
 
   say_to_chan "#{sender}: #{result}"
