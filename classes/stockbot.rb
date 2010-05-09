@@ -44,7 +44,7 @@ class StockBot
         begin
           if content.match(/^(\.|\!)(\w+)(\ )?(.*)/)
             method = $2.to_s
-            args   = $4.to_s.strip.gsub(/'/, "\\\\'")
+            args   = $4.to_s.strip
 
             if respond_to?(method, true)
               send(method, args.split(' ').push(msg.match(/\:([^\!]+)\!/)[1]))
