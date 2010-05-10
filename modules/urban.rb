@@ -1,19 +1,23 @@
 def urban(*args)
-  if args.flatten.first
-    word = args.flatten.first
-    html = RestClient.get('http://www.urbandictionary.com/define.php?term=' + word)
-    doc = Hpricot(html)
-  else
-    html = RestClient.get('http://www.urbandictionary.com/random.php')
-    doc = Hpricot(html)
-  end
-  
-  definition = doc.at("meta[@name='Description']")['content']
-  definition = definition.split(' - ')
-  definition = definition.first + " - " + definition.last
+  sender  = args[0].pop
+  term    = args.flatten.first.strip rescue nil
 
-  say_to_chan definition
+  if term
+    html = RestClient.get("http://www.urbandictionary.com/define.php?term=#{CGI.escape(term)}")
+    doc = Hpricot(html.to_s)
+
+    begin
+      definition = doc.at("meta[@name='Description']")['content']
+      definition = definition.split(' - ')
+      definition = definition.first + " - " + definition.last
+
+      say_to_chan definition
+    rescue
+      say_to_chan 'Definition not found.'
+    end
+  else
+    say_to_chan 'No word specified.'
+  end
 end
 
-alias :ud
-
+alias :ud :urban
