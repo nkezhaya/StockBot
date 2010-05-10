@@ -10,6 +10,5 @@ def title(*args)
       say_to_chan "URL Title: #{title}" unless title == ''
     end
   rescue Timeout::Error
-    say_to_chan 'Execution timeout.'
   end
 end
