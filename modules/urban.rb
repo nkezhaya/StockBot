@@ -1,6 +1,6 @@
 def urban(*args)
   sender  = args[0].pop
-  term    = args.flatten.first.strip rescue nil
+  term    = args.flatten.to_s rescue nil
 
   if term
     html = RestClient.get("http://www.urbandictionary.com/define.php?term=#{CGI.escape(term)}")
