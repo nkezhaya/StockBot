@@ -16,7 +16,18 @@ def urban(*args)
       say_to_chan 'Definition not found.'
     end
   else
-    say_to_chan 'No word specified.'
+    html = RestClient.get("http://www.urbandictionary.com/random.php")
+    doc = Hpricot(html.to_s)
+    
+    begin
+      definition = doc.at("meta[@name='Description']")['content']
+      definition = definition.split(' - ')
+      definition = definition.first + " - " + definition.last
+
+      say_to_chan definition
+    rescue
+      say_to_chan 'Urban Dictionary is down.'
+    end
   end
 end
 
