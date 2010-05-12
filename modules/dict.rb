@@ -18,4 +18,5 @@ def dict(*args)
   end
 end
 
-alias :d :def :dict
+alias :d :dict
+alias :def :dict
