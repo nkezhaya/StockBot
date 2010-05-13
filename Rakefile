@@ -12,5 +12,6 @@ task :install do
     String :name
     String :weather
     String :sms_email
+    String :picture
   end
 end

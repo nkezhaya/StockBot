@@ -22,20 +22,15 @@ class String
     self.to_s
   end
 
-  def strip_html!(replacement = '')
-    self.gsub!(/<[^<]+\>/, replacement)
-    self.to_s
-  end
-  
   def strip_html!(options = {})
     replacement = options.delete(:replacement)
     remove_wrapped_content = options.delete(:remove_wrapped_content)
     
     if remove_wrapped_content
-      self.gsub!(/<[^<]+\>(.*)<[^<]+\>/, replacement)
+      self.gsub!(/<[^<]+\>([^\<\>]*)<[^<]+\>/, (replacement || ''))
     else
-	    self.gsub!(/<[^<]+\>(.*)/, replacement)
-	  end
-	  self.to_s
+      self.gsub!(/<[^<]+\>/, (replacement || ''))
+    end
+    self.to_s
   end
 end
