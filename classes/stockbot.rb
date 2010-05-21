@@ -7,6 +7,7 @@ class StockBot
     say "JOIN ##{@channel}"
 
     Dir['modules/*'].each { |object| require object }
+    self.class.send(:include, Plugins)
   end
 
   def say(msg)
@@ -32,7 +33,7 @@ class StockBot
       if msg.match(/PRIVMSG ##{@channel} :(.*)$/)
         content = $~[1]
 
-        if respond_to? 'title', true
+        if Plugins.instance_methods.include? 'title'
           if content.match(/((http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?(\/[\w\-\=\?\d\%]+)?)/ix)
             url = $1
             unless content.match(/^(\.|\!)title/)
@@ -46,7 +47,7 @@ class StockBot
             method = $2.to_s
             args   = $4.to_s.strip
 
-            if respond_to?(method, true)
+            if Plugins.instance_methods.include? method
               send(method, args.split(' ').push(msg.match(/\:([^\!]+)\!/)[1]))
             end
           end
