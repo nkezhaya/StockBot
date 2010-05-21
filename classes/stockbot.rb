@@ -6,7 +6,7 @@ class StockBot
     say "USER stockbot 0 * StockBot"
     say "JOIN ##{@channel}"
 
-    Dir['modules/*'].each { |object| require object }
+    Dir['plugins/*'].each { |object| require object }
     self.class.send(:include, Plugins)
   end
 
