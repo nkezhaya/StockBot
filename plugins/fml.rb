@@ -8,7 +8,7 @@ module Plugins
     begin
       xml = RestClient.get("http://api.betacie.com/view/random?key=#{api_key}&language=#{lang}")
       doc  = Hpricot(xml.to_s)
-      id = doc.search("//item").attributes["id"]
+      id = doc.search("item").first.attributes["id"]
       fml = doc.search("//item").search("//text").first.inner_html
         
       say_to_chan id + " - " + fml
