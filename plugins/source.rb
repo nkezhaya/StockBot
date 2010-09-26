@@ -1,6 +1,6 @@
 module Plugins
   def source(*args)
-    say_to_chan 'http://github.com/nkezhaya/StockBot'
+    say_to_chan 'http://github.com/whitepaperclip/StockBot'
   end
 
   alias :src :source
