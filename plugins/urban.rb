@@ -6,7 +6,7 @@ module Plugins
 
     begin
       doc        = Hpricot(html.to_s)
-      definition = doc.at("meta[@name='Description']")['content'].split(' - ')
+      definition = doc.at("meta[@name='Description']")['content'].split(' - ').first
 
       say_to_chan definition
     rescue
