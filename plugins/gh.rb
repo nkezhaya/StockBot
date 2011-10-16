@@ -1,7 +1,7 @@
 module Plugins
   def gh(*args)
     begin
-      html = RestClient.get('http://confessions.grouphug.us/random')
+      html = RestClient.get("http://grouphug.us/frontpage?page=#{rand(16)}")
     rescue
       say_to_chan 'GH is down. :('
       return
@@ -9,12 +9,13 @@ module Plugins
 
     doc = Hpricot(html.to_s)
 
-    doc.search("//h2[@class='title']")[5].inner_html =~ /(\d+)/
-    number = $1
-    confession = doc.search("//div[@class='content']")[5].inner_html.strip
+    confession_div = doc.search("//div[@class='node node-confession node-promoted']").to_a.shuffle.first
+    number = confession_div.search('//a')[0].inner_html
+
+    confession = confession_div.search("//div[@class='field-items']//div")[0].inner_html
     confession.html_to_ascii!
 
-    confession = Sanitize.clean(confession)
+    confession = Sanitize.clean(confession).strip
 
     confession.scan(/.{1,350}/).each_with_index do |line, index|
       line = "#{number} - #{line}" if index == 0
