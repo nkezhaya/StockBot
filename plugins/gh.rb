@@ -1,7 +1,7 @@
 module Plugins
   def gh(*args)
     begin
-      html = RestClient.get("http://grouphug.us/frontpage?page=#{rand(16)}")
+      html = RestClient.get("http://grouphug.us/frontpage?page=#{rand(206)}")
     rescue
       say_to_chan 'GH is down. :('
       return
